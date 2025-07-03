@@ -70,7 +70,7 @@ def equivalent(n,l):
             print(f' {j}', end= '\t')
         print('\n')
 
-    print('ATOMIC TERM SYMBOLS ARE (Ascending order of energy- Hund\'s Rule):\n')
+    print('ATOMIC TERM SYMBOLS ARE (Increasing order of energy- Hund\'s Rule):\n')
 
     slater=np.array(slater)
     tab= slater[:,1:]
