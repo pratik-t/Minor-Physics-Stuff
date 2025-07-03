@@ -2,7 +2,7 @@ Determines all possible atomic configurations for $`n`$ given equivalent electro
 
 Produces a Slater's table which might look as such (for two $`l=p`$ electrons):
 
-| $`{}_{M_l}`$ $`{}^{M_s}`$ |  $`-1`$  |   $`0`$  |   $`1`$  |
+| $`{M_l}/{M_s}`$ |  $`-1`$  |   $`0`$  |   $`1`$  |
 |------|------|------|------|
 |  $`2`$   |   $`0`$  |   $`1`$  |  $`0`$   |
 |  $`1`$   |   $`1`$  |   $`2`$  |  $`1`$   |
