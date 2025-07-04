@@ -169,10 +169,11 @@ if (m > l):
 s = int(input('Save animation (1) or view interactive (0): '))
 save = (s == 1)
 
-fig = plt.figure()
+fig = plt.figure(figsize=(12,8))
+fig.tight_layout()
+fig.subplots_adjust(left=0.02, right=0.98, top=0.99, wspace=0.02)
 
-plt.suptitle(f'Spherical Harmonics: Radial Plot and Oscillations on Sphere\n\n\
-                l={l}, m={m}')
+fig.text(0.5,0.1, f'Spherical Harmonics: \nRadial Plot and Oscillations on Sphere \nl={l}, m={m}', ha='center',fontsize=24)
 
 radial_graph(l, m, fig)
 
