@@ -4,13 +4,13 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-N_workers = 16
+N_workers = 45
 N_runs = 500
 
 starting_neutrons = 100
 max_gen = 30
-enrichment = [65, 85, 100]
-reflection = [0, 70]
+enrichment = [100]
+reflection = [0]
 
 radii = np.linspace(0.1, 25, 100)
 
@@ -20,23 +20,19 @@ for e in enrichment:
 
         ench, rad, mass, keff = np.zeros(len(radii)), np.zeros(len(radii)), np.zeros(len(radii)), np.zeros(len(radii))
 
-        filename = f'data/result_{e}_{r}.csv'
+        filename = f'data/result_{e}_{r}_isotropic.csv'
 
         if not os.path.exists(filename):
             with open(filename, 'w') as f:
                 f.write('Enrichment,Radius,Mass,keff\n')
 
         for i in range(len(radii)):
-            r, m, k = critical(N_workers, N_runs, radii[i], starting_neutrons, max_gen, e, r)
-            ench[i] = e
-            rad[i] = r
-            mass[i] = m
-            keff[i] = k
+            rad, m, k = critical(N_workers, N_runs, radii[i], starting_neutrons, max_gen, e, r)
             
             with open(filename, 'a') as f:
-                f.write(f"{enrichment},{r},{m},{k}\n")
+                f.write(f"{e},{rad},{m},{k}\n")
 
-            print(f"Saved: radius={r:.2f} cm, k_eff={k:.3f}")
+            print(f"Saved: radius={rad:.2f} cm, k_eff={k:.3f}")
 
 # N_workers = 16
 # N_runs = 500

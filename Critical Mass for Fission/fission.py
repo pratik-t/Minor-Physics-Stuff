@@ -59,7 +59,7 @@ def energy_sampler(process, number):
 
 def graph_interactions(radius, enrichment, reflection, max_gen, burn_in, min_tail, save=False):
 
-    results = run(enrichment, reflection, radius, starting_neutrons,
+    results = run(enrichment, reflection, radius, 1,
               max_gen, 100, all_neutrons_flag=True)
 
     masses = results[0]
@@ -134,16 +134,18 @@ class Neutron():
 
     def trajectory(self, xf, xf_proc):
         
-        if xf_proc in ['INL', 'F', 'G']:
-            cos_theta = np.random.uniform(-1, 1) #angles upto 25deg
-        elif xf_proc == 'EL':
-            if 10**self.logenergy<5e-2: 
-                cos_theta = np.random.uniform(-1.0, 1.0) # all angles
-            elif 10**self.logenergy<1e-1: 
-                cos_theta = np.random.uniform(np.cos(np.deg2rad(130)), np.cos(np.deg2rad(0))) # angles upto 130deg
-            else:
-                cos_theta = np.random.uniform(np.cos(np.deg2rad(50)), np.cos(np.deg2rad(0))) #angles upto 50deg
+        # if xf_proc in ['INL', 'F', 'G']:
+        #     cos_theta = np.random.uniform(-1, 1) #angles upto 25deg
+        # elif xf_proc == 'EL':
+        #     if 10**self.logenergy<5e-2: 
+        #         cos_theta = np.random.uniform(-1.0, 1.0) # all angles
+        #     elif 10**self.logenergy<1e-1: 
+        #         cos_theta = np.random.uniform(np.cos(np.deg2rad(130)), np.cos(np.deg2rad(0))) # angles upto 130deg
+        #     else:
+        #         cos_theta = np.random.uniform(np.cos(np.deg2rad(50)), np.cos(np.deg2rad(0))) #angles upto 50deg
         
+        cos_theta = np.random.uniform(-1.0, 1.0)
+
         phi = np.random.uniform(0.0, 2*np.pi)
         sin_theta = np.sqrt(max(0.0, 1.0 - cos_theta*cos_theta))
         unit_dir =  np.array([sin_theta*np.cos(phi),
@@ -275,7 +277,7 @@ def run(enrichment, reflection, radius, starting_neutrons, max_gen, MAX_NEUTRONS
 
     while (gen < max_gen) and len(current_gen) > 0:
         
-        print(f'gen {gen} N: {len(current_gen)}')
+        # print(f'gen {gen} N: {len(current_gen)}')
 
         if all_neutrons_flag:
             all_neutrons.extend(current_gen)
@@ -354,13 +356,13 @@ def critical(N_workers, N_runs, radius, starting_neutrons, max_gen, enrichment, 
 
     return radius, mass, k_eff
 
-radius = 10
-starting_neutrons = 1
-enrichment = 85
-reflection = 0
-max_gen = 30
+# radius = 10
+# starting_neutrons = 1
+# enrichment = 85
+# reflection = 0
+# max_gen = 30
 
-burn_in = 10  # number of generations after which to start averaging
-min_tail = 10  # minimum number of generations after burn-in to start averaging
-graph_interactions(radius, enrichment, reflection, max_gen, burn_in, min_tail, save=True)
-plt.show()
+# burn_in = 10  # number of generations after which to start averaging
+# min_tail = 10  # minimum number of generations after burn-in to start averaging
+# graph_interactions(radius, enrichment, reflection, max_gen, burn_in, min_tail, save=True)
+# plt.show()
