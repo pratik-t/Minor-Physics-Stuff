@@ -215,32 +215,39 @@ def plot_results(sets):
     
     fig, ax = plt.subplots(1,2, figsize=(12, 6), tight_layout=True)
     
-    axins = inset_axes(ax[1], width="45%", height="45%", loc="center right", borderpad=1)
-    x1, x2 = 25, 100  # x-range to zoom
-    y1, y2 = 0.8, 1.4  # y-range to zoom
+    axins = inset_axes(ax[1], width="45%", height="45%", loc="lower right", borderpad=1)
+    x1, x2 = 0, 100  # x-range to zoom
+    y1, y2 = 0.8, 2  # y-range to zoom
 
     for s in sets:
-        df = pd.read_csv(f'data/result_{s[0]}_{s[1]}.csv')
-        ax[0].plot(df['Radius'], df['keff'], label=f'{s[0]}\%')
-        ax[1].plot(df['Mass'], df['keff'], label=f'{s[0]}\%')
+        df1 = pd.read_csv(f'data/result_{s[0]}_{s[1]}.csv')
+        ax[0].plot(df1['Radius'], df1['keff'], label='crude angular dependence')
+        ax[1].plot(df1['Mass'], df1['keff'], label=f'crude angular dependence')
 
+        df = pd.read_csv(f'data/result_{s[0]}_{s[1]}_isotropic.csv')
+        ax[0].plot(df['Radius'], df['keff'], label='isotropic')
+        ax[1].plot(df['Mass'], df['keff'], label=f'isotropic')
+
+        axins.plot(df1['Mass'], df1['keff'])
         axins.plot(df['Mass'], df['keff'])
         axins.set_xlim(x1, x2)
         axins.set_ylim(y1, y2)
 
-    ax[0].legend(title='Enrichment', loc='lower right')
+    ax[0].legend(title='100\% Enrichment\nNo reflector', loc='lower right')
     ax[0].set_xlabel('Radius')
     ax[0].set_ylabel(r'$k_{eff}$')
 
     ax[1].set_xlabel('Mass')
     ax[1].set_ylabel(r'$k_{eff}$')
 
-    ax[0].set_ylim([0, 1.6])
-    ax[1].set_ylim([0, 1.6])
+    ax[0].set_ylim([0.2, 2])
+    ax[1].set_ylim([0.2, 2])
 
-    plt.savefig('fig/result 1.jpg', dpi=300, bbox_inches='tight')
+    plt.savefig('fig/result 3.jpg', dpi=300, bbox_inches='tight')
 
-plot_results([[65, 0], [85, 0], [100, 0]])
-# plot_results([[65, 70], [85, 70]])
+# plot_results([[65, 0], [85, 0], [100, 0]])
+# plot_results([[65, 70], [85, 70], [100, 70]])
+
+plot_results([[100,0]])
 
 plt.show()

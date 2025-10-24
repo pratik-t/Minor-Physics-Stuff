@@ -134,18 +134,16 @@ class Neutron():
 
     def trajectory(self, xf, xf_proc):
         
-        # if xf_proc in ['INL', 'F', 'G']:
-        #     cos_theta = np.random.uniform(-1, 1) #angles upto 25deg
-        # elif xf_proc == 'EL':
-        #     if 10**self.logenergy<5e-2: 
-        #         cos_theta = np.random.uniform(-1.0, 1.0) # all angles
-        #     elif 10**self.logenergy<1e-1: 
-        #         cos_theta = np.random.uniform(np.cos(np.deg2rad(130)), np.cos(np.deg2rad(0))) # angles upto 130deg
-        #     else:
-        #         cos_theta = np.random.uniform(np.cos(np.deg2rad(50)), np.cos(np.deg2rad(0))) #angles upto 50deg
-        
-        cos_theta = np.random.uniform(-1.0, 1.0)
-
+        if xf_proc in ['INL', 'F', 'G']:
+            cos_theta = np.random.uniform(-1, 1) #angles upto 25deg
+        elif xf_proc == 'EL':
+            if 10**self.logenergy<5e-2: 
+                cos_theta = np.random.uniform(-1.0, 1.0) # all angles
+            elif 10**self.logenergy<1e-1: 
+                cos_theta = np.random.uniform(np.cos(np.deg2rad(130)), np.cos(np.deg2rad(0))) # angles upto 130deg
+            else:
+                cos_theta = np.random.uniform(np.cos(np.deg2rad(50)), np.cos(np.deg2rad(0))) #angles upto 50deg
+                
         phi = np.random.uniform(0.0, 2*np.pi)
         sin_theta = np.sqrt(max(0.0, 1.0 - cos_theta*cos_theta))
         unit_dir =  np.array([sin_theta*np.cos(phi),
